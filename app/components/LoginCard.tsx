@@ -30,11 +30,16 @@ const LoginCard = ({ client_id, client_secret }) => {
       // Make a POST request using the fetch API
       fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
+        form: {
+          code: authorizationCode,
+          redirect_uri: 'http://localhost:3000',
+          grant_type: 'authorization_code'
+        },
         headers: {
           'Authorization': `Basic ${btoa(`${client_id}:${client_secret}`)}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `grant_type=authorization_code&code=${authorizationCode}&redirect_uri=http://localhost:3000`,
+        json:true
       })
       .then(response => response.json())
       .then(data => {

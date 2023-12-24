@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <>
-    <LoginCard client_id={process.env.CLIENT_ID}> </LoginCard>
+    <LoginCard client_id={process.env.CLIENT_ID} client_secret={process.env.CLIENT_ID}> </LoginCard>
     </>
   
   )

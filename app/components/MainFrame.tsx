@@ -6,6 +6,8 @@ const MainFrame = ({ token } : { token: string; }) => {
     const [ listOfSongs, setSongList ] = useState([]);
     
     const getSomeLikedSongs = async () => {
+
+        // fetch('/api/spotify/usersLikedSongs'); <---how to access our api route
         console.log("using this token", token );
         const response = await fetch("https://api.spotify.com/v1/me/tracks", {
             headers: {

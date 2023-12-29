@@ -9,6 +9,9 @@ import LoginCard from './components/LoginCard';
 
 
 export default function Home() {
+
+  console.log("this is server code");
+
    
 
   return (

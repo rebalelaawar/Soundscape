@@ -1,6 +1,7 @@
 import { useSearchParams } from 'next/navigation'
 import LoginCard from '../components/LoginCard';
 import Link from 'next/link';
+import MainFrame from '../components/MainFrame';
 
 
 
@@ -12,25 +13,19 @@ const Space = async ({ searchParams } : { searchParams: { [key: string]: string 
     const [ client_id, client_secret ] = [ process.env.CLIENT_ID, process.env.CLIENT_SECRET ];
     console.log("-------------");
     console.log( authorizationCode );
-    
-    const token = await fetch( 'https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        //@ts-ignore
-        body: new URLSearchParams({ code: authorizationCode, redirect_uri: 'http://localhost:3000/space', grant_type: 'authorization_code' }),
-        headers: { 'Authorization': `Basic ${ btoa(`${ client_id }:${ client_secret }`) }`, 'Content-Type': 'application/x-www-form-urlencoded' }
-      })
-      .then(response => response.json( ))
-      .then(data => {
-        console.log( data );
-        
-        const accessToken = data.access_token;
-        console.log( 'Access Token:', accessToken );
-        return accessToken;
-      })
-      .catch( error => console.error( 'Error exchanging authorization code for access token:', error ));
+    const request = {
+      method: 'POST',
+      //@ts-ignore
+      body: new URLSearchParams({ code: authorizationCode, redirect_uri: 'http://localhost:3000/space', grant_type: 'authorization_code' }),
+      headers: { 'Authorization': `Basic ${ btoa(`${ client_id }:${ client_secret }`) }`, 'Content-Type': 'application/x-www-form-urlencoded' }
+    };
+    const token : string = await fetch( 'https://accounts.spotify.com/api/token', request )
+    .then(response => response.json( ))
+    .then( data => data.access_token )
+    .catch( error => console.error( 'Error exchanging authorization code for access token:', error ));
 
     
-      return <div>This is app: { authorizationCode } <br/> this is token: { token }</div>;
+    return <MainFrame token={ token }/>;
 
   };
   

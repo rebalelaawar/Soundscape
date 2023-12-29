@@ -8,7 +8,8 @@ export default function Home({ searchParams } : { searchParams: { [key: string]:
 
   
   return <div>
-    THIS IS THE HOME PAGE PLEASE <Link href={ '/login' }>LOGIN</Link>
+    <h1>THIS IS THE HOME PAGE </h1>
+     <Link href={ '/login' }>LOGIN</Link>
   </div>;
 
 };

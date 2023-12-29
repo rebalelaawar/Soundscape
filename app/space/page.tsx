@@ -16,7 +16,7 @@ const Space = async ({ searchParams } : { searchParams: { [key: string]: string 
     const request = {
       method: 'POST',
       //@ts-ignore
-      body: new URLSearchParams({ code: authorizationCode, redirect_uri: 'http://localhost:3000/space', grant_type: 'authorization_code' }),
+      body: new URLSearchParams({ code: authorizationCode, redirect_uri: 'http://localhost:3000/space', grant_type: 'authorization_code', scope: 'user-library-read' }),
       headers: { 'Authorization': `Basic ${ btoa(`${ client_id }:${ client_secret }`) }`, 'Content-Type': 'application/x-www-form-urlencoded' }
     };
     const token : string = await fetch( 'https://accounts.spotify.com/api/token', request )

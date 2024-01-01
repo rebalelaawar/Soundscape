@@ -7,22 +7,26 @@ const MainFrame = ({ token } : { token: string; }) => {
     
     const getSomeLikedSongs = async () => {
 
-        // fetch('/api/spotify/usersLikedSongs'); <---how to access our api route
+      // await fetch(`/api/spotify/usersLikedSongs/?token=${ token }`)
+      // .then( res => res.json( ))
+      // .then( res => console.log( res ) ); // <---how to access our api route
         console.log("using this token", token );
         const response = await fetch("https://api.spotify.com/v1/me/tracks", {
             headers: {
                 Authorization: 'Bearer ' + token
               }
         })
+        .then( res => res.json( ))
+        .catch( error => error ).then( error => console.log( error ))
         console.log(response)
-        if (response.ok){
-            const likedSongs = await response.json();
-            console.log(likedSongs)
-            setSongList(likedSongs.items)
-        }
-        else {
-            console.error("Failed to fetch user tracks");
-          }
+        // if (response.ok){
+        //     const likedSongs = await response.json();
+        //     console.log(likedSongs)
+        //     setSongList(likedSongs.items)
+        // }
+        // else {
+        //     console.error("Failed to fetch user tracks");
+        //   }
 
     };
 
@@ -41,7 +45,8 @@ const MainFrame = ({ token } : { token: string; }) => {
             <p>List of Liked Songs:</p>
             <ul>
               {listOfSongs.map((song) => (
-                <li key={song.track.id}>{song.track.name}</li>
+                //@ts-ignore
+                <li key={ song.track.id }>{ song.track.name }</li>
               ))}
             </ul>
           </div>

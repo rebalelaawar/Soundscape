@@ -7,11 +7,10 @@ const MainFrame = ({ token } : { token: string; }) => {
     
     const getSomeLikedSongs = async () => {
       const userLikedSongs = await fetch(`/api/spotify/usersLikedSongs/?token=${ token }`)
-      .then( res =>   { console.log( res.status); return res; }
-      )
-      .then( res => res.json( ));
-      console.log( userLikedSongs );
-      setSongList( userLikedSongs.items );
+      .then ( res => { if( res.status === 200 ) { return res } else throw res })
+      .then( res => res.json( ))
+      .then( res => setSongList( res.items ))
+      .catch( error => console.log( error ))
     };
 
     useEffect(( ) => { 

@@ -17,6 +17,7 @@ const handler = async ( req : NextApiRequest, res: NextApiResponse ) => {
     .then( async songsReq => {
         console.log( songsReq );
         if ( songsReq.ok ){
+            
             console.log(songsReq);
             res.status(200).json( songsReq );
         } else {

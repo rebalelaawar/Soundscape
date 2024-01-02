@@ -6,7 +6,10 @@ const MainFrame = ({ token } : { token: string; }) => {
     const [ listOfSongs, setSongList ] = useState([]);
     
     const getSomeLikedSongs = async () => {
-      const userLikedSongs = await fetch(`/api/spotify/usersLikedSongs/?token=${ token }`).then( res => res.json( ));
+      const userLikedSongs = await fetch(`/api/spotify/usersLikedSongs/?token=${ token }`)
+      .then( res =>   { console.log( res.status); return res; }
+      )
+      .then( res => res.json( ));
       console.log( userLikedSongs );
       setSongList( userLikedSongs.items );
     };

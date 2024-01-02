@@ -7,31 +7,32 @@ const MainFrame = ({ token } : { token: string; }) => {
     
     const getSomeLikedSongs = async () => {
 
-      // await fetch(`/api/spotify/usersLikedSongs/?token=${ token }`)
-      // .then( res => res.json( ))
-      // .then( res => console.log( res ) ); // <---how to access our api route
-        console.log("using this token", token );
-        const response = await fetch("https://api.spotify.com/v1/me/tracks", {
-            headers: {
-                Authorization: 'Bearer ' + token
-              }
-        })
-        .then( async res => {
-          console.log( res );
-          if ( res.ok ){
-              console.log(res)
-              //@ts-ignore
-              setSongList( res.items );
-          }
-          else {
-            console.log("bad");
+      const ressy = await fetch(`/api/spotify/usersLikedSongs/?token=${ token }`).then( res => res.json( ));
+      console.log( ressy );
+      
+
+        // console.log("using this token", token );
+        // const response = await fetch("https://api.spotify.com/v1/me/tracks", {
+        //     headers: {
+        //         Authorization: 'Bearer ' + token
+        //       }
+        // })
+        // .then( async res => {
+        //   console.log( res );
+        //   if ( res.ok ){
+        //       console.log(res)
+        //       //@ts-ignore
+        //       setSongList( res.items );
+        //   }
+        //   else {
+        //     console.log("bad");
             
-              throw res;
-            }
+        //       throw res;
+        //     }
           
-        })
-        .catch( error => console.log( "ERR", error ))
-        // console.log(response, "<<")
+        // })
+        // .catch( error => console.log( "ERR", error ))
+        // // console.log(response, "<<")
 
     };
 

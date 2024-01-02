@@ -16,17 +16,22 @@ const MainFrame = ({ token } : { token: string; }) => {
                 Authorization: 'Bearer ' + token
               }
         })
-        .then( res => res.json( ))
-        .catch( error => error ).then( error => console.log( error ))
-        console.log(response)
-        // if (response.ok){
-        //     const likedSongs = await response.json();
-        //     console.log(likedSongs)
-        //     setSongList(likedSongs.items)
-        // }
-        // else {
-        //     console.error("Failed to fetch user tracks");
-        //   }
+        .then( async res => {
+          console.log( res );
+          if ( res.ok ){
+              console.log(res)
+              //@ts-ignore
+              setSongList( res.items );
+          }
+          else {
+            console.log("bad");
+            
+              throw res;
+            }
+          
+        })
+        .catch( error => console.log( "ERR", error ))
+        // console.log(response, "<<")
 
     };
 

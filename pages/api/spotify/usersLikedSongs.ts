@@ -13,6 +13,7 @@ const handler = async ( req : NextApiRequest, res: NextApiResponse ) => {
     console.log( token );
 
     const response = await fetch("https://api.spotify.com/v1/me/tracks", { headers: { Authorization: 'Bearer ' + token }})
+    .then( r => r.json( ))
     .then( async songsReq => {
         console.log( songsReq );
         if ( songsReq.ok ){

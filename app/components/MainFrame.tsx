@@ -7,9 +7,34 @@ const MainFrame = ({ token } : { token: string; }) => {
     
     const getSomeLikedSongs = async () => {
 
-      const songs = await fetch(`/api/spotify/usersLikedSongs/?token=${ token }`).then( res => res.json( ));
-      console.log( songs );
-      setSongList( songs.items );
+      const userLikedSongs = await fetch(`/api/spotify/usersLikedSongs/?token=${ token }`).then( res => res.json( ));
+      console.log( userLikedSongs );
+      setSongList( userLikedSongs.items );
+
+
+        // console.log("using this token", token );
+        // const response = await fetch("https://api.spotify.com/v1/me/tracks", {
+        //     headers: {
+        //         Authorization: 'Bearer ' + token
+        //       }
+        // })
+        // .then( async res => {
+        //   console.log( res );
+        //   if ( res.ok ){
+        //       console.log(res)
+        //       //@ts-ignore
+        //       setSongList( res.items );
+        //   }
+        //   else {
+        //     console.log("bad");
+            
+        //       throw res;
+        //     }
+          
+        // })
+        // .catch( error => console.log( "ERR", error ))
+        // // console.log(response, "<<")
+
     };
 
     useEffect(( ) => { 

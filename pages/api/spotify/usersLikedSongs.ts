@@ -12,11 +12,7 @@ const handler = async ( req : NextApiRequest, res: NextApiResponse ) => {
     const { token } = req.query;
     console.log( token );
 
-    const response = await fetch("https://api.spotify.com/v1/me/tracks", {
-        headers: {
-            Authorization: 'Bearer ' + token
-          }
-    })
+    const response = await fetch("https://api.spotify.com/v1/me/tracks", { headers: { Authorization: 'Bearer ' + token }})
     .then( async songsReq => {
         console.log( songsReq );
         if ( songsReq.ok ){
@@ -32,10 +28,6 @@ const handler = async ( req : NextApiRequest, res: NextApiResponse ) => {
         res.status(200).json({ ...error });
         // console.log( "ERR", error );
     })
-
-
-    res.status(200).json({ message: 'Hello from Next.js!' });
-
 };
 
 export default handler;

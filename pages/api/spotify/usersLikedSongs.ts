@@ -17,14 +17,15 @@ const handler = async ( req : NextApiRequest, res: NextApiResponse ) => {
             Authorization: 'Bearer ' + token
           }
     })
-    .then( async res => {
-        console.log( res );
-        if ( res.ok ){
-            console.log(res)
+    .then( async songsReq => {
+        console.log( songsReq );
+        if ( songsReq.ok ){
+            console.log(songsReq);
+            res.status(200).json( songsReq );
         } else {
             console.log("bad");
-            console.log( typeof res );            
-            throw res;
+            console.log( typeof songsReq );            
+            throw songsReq;
         };
     })
     .catch( error => {

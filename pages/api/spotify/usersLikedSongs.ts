@@ -34,6 +34,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
+
+const getUserLikedSongs = async ( ) => {
+  
+};
+
+const seedSongs =async ( ) => {
+  
+};
+
 const trackParams = async (token : string, trackIds : Array<any> ) => {
     
   const paramFetch = `https://api.spotify.com/v1/audio-features?ids=${ trackIds.join(',') }`;
@@ -45,11 +54,7 @@ const trackParams = async (token : string, trackIds : Array<any> ) => {
     data.audio_features.forEach(( params : any ) => songParamsHash[ params.id ] = params );
     return songParamsHash;
   } else console.log( response.status );
-  
-  
-
-
-}
+};
 
 
 

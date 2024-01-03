@@ -7,7 +7,7 @@ import MainFrame from '../components/MainFrame';
 
 const Space = async ({ searchParams } : { searchParams: { [key: string]: string | string[] | undefined }}) => {
 
-  if( "code" in searchParams ) {
+  if( "code" in searchParams) {
 
     const { code: authorizationCode } = searchParams;
     const [ client_id, client_secret ] = [ process.env.CLIENT_ID, process.env.CLIENT_SECRET ];

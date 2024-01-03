@@ -13,6 +13,7 @@ const MainFrame = ({ token }: { token: string; }) => {
     const songsArray = data.songsReq.items
 
     
+    console.log( songsArray );
     
     setSongList(songsArray);
 

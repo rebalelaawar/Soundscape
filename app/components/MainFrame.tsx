@@ -10,7 +10,7 @@ const MainFrame = ({ token }: { token: string; }) => {
   const getSomeLikedSongs = async () => {
     const userLikedSongs = await fetch(`/api/spotify/usersLikedSongs/?token=${token}`)
     const data = await userLikedSongs.json();
-    const songsArray = data.songsReq.items
+    const songsArray = data.songArray;
     console.log(songsArray);
     setSongList(songsArray);
   };

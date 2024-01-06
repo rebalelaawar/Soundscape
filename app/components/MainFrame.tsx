@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState, useRef } from "react";
 import DummySongs from "../DummySongs";
+import StudyScene from "./StudyScene";
 
 const MainFrame = ({ token }: { token: string; }) => {
 
@@ -34,7 +35,7 @@ const MainFrame = ({ token }: { token: string; }) => {
     }
   };
 
-  return (
+  return <>
     <div>
       <main style={{ textAlign: 'center', marginTop: '50px', fontSize: '2em', color: 'green' }}>
         <strong>Soundscape</strong>
@@ -56,7 +57,9 @@ const MainFrame = ({ token }: { token: string; }) => {
         ))}
       </ul>
     </div>
-  );
+
+    <StudyScene/>
+    </>;
 };
 
 

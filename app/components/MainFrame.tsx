@@ -1,9 +1,10 @@
 'use client'
 import { useEffect, useState, useRef } from "react";
+import DummySongs from "../DummySongs";
 
 const MainFrame = ({ token }: { token: string; }) => {
 
-  const [listOfSongs, setSongList] = useState([])
+  const [listOfSongs, setSongList] = useState(DummySongs);
   const [currentSong, setCurrentSong] = useState(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -16,7 +17,7 @@ const MainFrame = ({ token }: { token: string; }) => {
   };
   
   useEffect(() => {
-    getSomeLikedSongs();
+    // getSomeLikedSongs();
   }, [token]);
 //@ts-ignore
   const handleSongClick = (song) => {

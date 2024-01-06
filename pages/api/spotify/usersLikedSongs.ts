@@ -27,7 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
 
     let songArray = [ ];
-    const tracksUserHasLiked = await fetch(`https://api.spotify.com/v1/me/tracks?limit=10`, { headers: { Authorization: 'Bearer ' + token }})
+    const tracksUserHasLiked = await fetch(`https://api.spotify.com/v1/me/tracks?limit=30`, { headers: { Authorization: 'Bearer ' + token }})
       .then((r) => { if (r.status === 200) return r.json(); else throw r; });
     //@ts-ignore
     songArray = [ ...tracksUserHasLiked.items.map(( track : SpotifyApi.TrackObjectFull ) => ({ _type: "userLikedSong", ...track }) ) ];

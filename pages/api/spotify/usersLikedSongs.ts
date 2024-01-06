@@ -1,10 +1,11 @@
+import { setDefaultResultOrder } from 'dns';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 interface Req extends NextApiRequest {
     headers: { };
     query: { token: string; };
 };
-
+//@ts-ignore
 const getUserLikedSongs = async ( token : string ) : Promise<Array<SpotifyApi.TrackLinkObject>> => {
   
   const req = await fetch(`https://api.spotify.com/v1/me/tracks?limit=50`, { headers: { Authorization: 'Bearer ' + token }})
@@ -12,7 +13,7 @@ const getUserLikedSongs = async ( token : string ) : Promise<Array<SpotifyApi.Tr
 
   return req;
 };
-
+//@ts-ignore
 const seedSongs = async ( token : string, trackIds : Array<SpotifyApi.TrackLinkObject> ) => {
   
   const seed = trackIds.join( );
@@ -21,7 +22,7 @@ const seedSongs = async ( token : string, trackIds : Array<SpotifyApi.TrackLinkO
   // const seedTrack = '4Dp3yrEK6dQzr9oM2UtZgR'
   // const seedTrack2 = '2XBF1f4RccbgX662FH9yhE'
   const seedFetch = `https://api.spotify.com/v1/recommendations?&seed_tracks=${seed}&limit=1`
-  const response = await fetch( seedFetch, { headers: { Authorization: 'Bearer ' + token }, body: JSON.stringify({  }) });
+  const response = await fetch( seedFetch, { headers: { Authorization: 'Bearer ' + token } });
   if( response.status === 200 ) {
     const data = await response.json()
     console.log(data)
@@ -58,21 +59,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .then((r) => { if (r.status === 200) return r.json(); else throw r; });
 
       console.log( tracksUserHasLiked.items );
-      
+    //@ts-ignore
     songArray = [ ...tracksUserHasLiked.items.map(( track : SpotifyApi.TrackObjectFull ) => ({ _type: "userLikedSong", ...track }) ) ];
 
-    /*
-      split songArray into groups of two
-      [[ songArray_track1, songArray_track2 ], [ songArray_track3, songArray_track4 ], .... ]
-
-      get seed songs of each array we just split
-      const seedSongsData = ( await seedSongs( token, songArray.map( item => item.track.id ))).items;
-
-      append all arrays to song array 
-      songArray = [ ...songArray, ...seededSongs ]
-    */ 
     
-    
+    //   split songArray into groups of two
+      
+    //   [[ songArray_track1, songArray_track2 ], [ songArray_track3, songArray_track4 ], .... ]
+    const splitSongArray = [ ];
+    for( let i = 0; i < songArray.length; i += 2 ) {
+        splitSongArray.push( songArray.slice ( i, i + 2 ))
+    }
+
+    //   get seed songs of each array we just split
+    const seededSongs = await Promise.all(
+      splitSongArray.map( async ( group ) => {
+        const trackIds = group.map(( item ) => item.track.id )
+        //@ts-ignore
+        return await seedSongs(token, trackIds);
+      })
+    );
+    //   append all arrays to song array 
+    songArray = [ ...songArray, ...seededSongs ]
+  
     //@ts-ignore
     const songParams = await trackParams( token, songArray.map( item => item.track.id ));
 

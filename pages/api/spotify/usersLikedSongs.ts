@@ -1,38 +1,27 @@
-import { setDefaultResultOrder } from 'dns';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-interface Req extends NextApiRequest {
-    headers: { };
-    query: { token: string; };
-};
+interface Req extends NextApiRequest { headers: { }; query: { token: string; }; };
+
 //@ts-ignore
 const getUserLikedSongs = async ( token : string ) : Promise<Array<SpotifyApi.TrackLinkObject>> => {
-  
   const req = await fetch(`https://api.spotify.com/v1/me/tracks?limit=50`, { headers: { Authorization: 'Bearer ' + token }})
   .then((r) => { if (r.status === 200) return r.json(); else throw r; });
-
   return req;
 };
-//@ts-ignore
+
 const seedSongs = async ( token : string, trackIds : Array<SpotifyApi.TrackLinkObject> ) => {
-  
   const seed = trackIds.join( );
-  console.log( seed );
-  
-  // const seedTrack = '4Dp3yrEK6dQzr9oM2UtZgR'
-  // const seedTrack2 = '2XBF1f4RccbgX662FH9yhE'
-  const seedFetch = `https://api.spotify.com/v1/recommendations?&seed_tracks=${seed}&limit=1`
+  console.log( seed );  
+  const seedTrack = '4Dp3yrEK6dQzr9oM2UtZgR, 2XBF1f4RccbgX662FH9yhE';
+  const seedFetch = `https://api.spotify.com/v1/recommendations?&seed_tracks=${seedTrack}&limit=1`
   const response = await fetch( seedFetch, { headers: { Authorization: 'Bearer ' + token } });
   if( response.status === 200 ) {
-    const data = await response.json()
-    console.log(data)
-    return data 
-  }
-  else {
-    console.log("Error : Cannot seed tracks")
+    const data = await response.json( );
+    return data ;
+  } else {
+    console.log("Error : Cannot seed tracks");
     console.log( response );
-    
-  }
+  };
 };
 
 const trackParams = async ( token : string, trackIds : Array<any> ) => {
@@ -55,7 +44,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
 
     let songArray = [ ];
-    const tracksUserHasLiked = await fetch(`https://api.spotify.com/v1/me/tracks?limit=50`, { headers: { Authorization: 'Bearer ' + token }})
+    const tracksUserHasLiked = await fetch(`https://api.spotify.com/v1/me/tracks?limit=10`, { headers: { Authorization: 'Bearer ' + token }})
       .then((r) => { if (r.status === 200) return r.json(); else throw r; });
 
       console.log( tracksUserHasLiked.items );
@@ -74,16 +63,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     //   get seed songs of each array we just split
     const seededSongs = await Promise.all(
       splitSongArray.map( async ( group ) => {
-        const trackIds = group.map(( item ) => item.track.id )
+        const trackIds = group.map(( item ) => {
+          return item.track.id;
+        })
         //@ts-ignore
-        return await seedSongs(token, trackIds);
+        const recs = await seedSongs( token, trackIds );
+        if( recs ) {          
+          return recs;
+        }
       })
-    );
-    //   append all arrays to song array 
-    songArray = [ ...songArray, ...seededSongs ]
-  
+      );
+      //   append all arrays to song array 
+      songArray = [ ...songArray, ...seededSongs ]
+      
     //@ts-ignore
-    const songParams = await trackParams( token, songArray.map( item => item.track.id ));
+    const songParams = await trackParams( token, songArray.map( item => {      
+      return item.track.id;
+    }));
 
     // @ts-ignore
     songArray.forEach( song => {
@@ -100,8 +96,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
    
-    //@ts-ignore
-    res.status(200).json({ songArray }); //HERE WE ARE SEND "songArray"
+    res.status(200).json({ songArray }); 
   } catch (error) {
     console.log( "ERROR:", error);
     //@ts-ignore

@@ -1,29 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-
+import { seedSongs } from './utils';
 interface Req extends NextApiRequest { headers: { }; query: { token: string; }; };
 
 //@ts-ignore
-const getUserLikedSongs = async ( token : string ) : Promise<Array<SpotifyApi.TrackLinkObject>> => {
-  const req = await fetch(`https://api.spotify.com/v1/me/tracks?limit=50`, { headers: { Authorization: 'Bearer ' + token }})
-  .then((r) => { if (r.status === 200) return r.json(); else throw r; });
-  return req;
-};
 
-const seedSongs = async ( token : string, trackIds : Array<SpotifyApi.TrackLinkObject> ) => {
-  const seed = trackIds.join( );
-  console.log( seed );  
-  const seedTrack = '4Dp3yrEK6dQzr9oM2UtZgR, 2XBF1f4RccbgX662FH9yhE';
-  const seedFetch = `https://api.spotify.com/v1/recommendations?&seed_tracks=${seedTrack}&limit=1`
-  const response = await fetch( seedFetch, { headers: { Authorization: 'Bearer ' + token } });
-  if( response.status === 200 ) {
-    const data = await response.json( );
-    return data ;
-  } else {
-    console.log("Error : Cannot seed tracks");
-    console.log( response.status );
-    return null;
-  };
-};
+const sleep = ( delay : number ) => new Promise((resolve) => setTimeout(resolve, delay))
+
 
 const trackParams = async ( token : string, trackIds : Array<any> ) => {
   const paramFetch = `https://api.spotify.com/v1/audio-features?ids=${ trackIds.join(',') }`;
@@ -47,8 +29,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let songArray = [ ];
     const tracksUserHasLiked = await fetch(`https://api.spotify.com/v1/me/tracks?limit=10`, { headers: { Authorization: 'Bearer ' + token }})
       .then((r) => { if (r.status === 200) return r.json(); else throw r; });
-
-      console.log( tracksUserHasLiked.items );
     //@ts-ignore
     songArray = [ ...tracksUserHasLiked.items.map(( track : SpotifyApi.TrackObjectFull ) => ({ _type: "userLikedSong", ...track }) ) ];
 
@@ -62,16 +42,33 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     //   get seed songs of each array we just split
-    const seededSongs = await Promise.all(
-      splitSongArray.map( async ( group ) => {
-        const trackIds = group.map(( item ) => {
-          return item.track.id;
-        })
-        //@ts-ignore
-        const recs = await seedSongs( token, trackIds );
-          return recs;
-      })
-      );
+
+    const seededSongs = [ ];
+    for ( let i = 0; i < splitSongArray.length; i++ ) {
+
+      await sleep( 1000 );
+      console.log( i );
+      
+      const coupledSongs = splitSongArray[i];
+      const trackIds = coupledSongs.map( item  => item.track.id );
+      //@ts-ignore
+      const recs = await seedSongs( token, trackIds );
+      console.log( recs );
+      seededSongs.push( recs );
+    };
+
+    // const seededSongs = await Promise.all(
+    //   splitSongArray.map( async ( group ) => {
+    //     const trackIds = group.map(( item ) => {
+    //       return item.track.id;
+    //     })
+    //     console.log( trackIds );
+        
+    //     //@ts-ignore
+    //     const recs = await seedSongs( token, trackIds );
+    //       return recs;
+    //   })
+    //   );
       
       const filteredSeeds = seededSongs.filter(element => element !== null);
 

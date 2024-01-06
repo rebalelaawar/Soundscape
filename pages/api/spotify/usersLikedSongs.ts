@@ -52,9 +52,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const coupledSongs = splitSongArray[i];
       const trackIds = coupledSongs.map( item  => item.track.id );
       //@ts-ignore
-      const recs = await seedSongs( token, trackIds );
-      console.log( recs );
-      seededSongs.push( recs );
+      const recs : { tracks: Array<SpotifyApi.TrackObjectFull>, seeds: Array<SpotifyApi.RecommendationsSeedObject>} = await seedSongs( token, trackIds );
+      recs.tracks.forEach( track => seededSongs.push({ _type: "recomended", track }));
+      
+      // seededSongs.push(  );
     };
 
     // const seededSongs = await Promise.all(
@@ -69,11 +70,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     //       return recs;
     //   })
     //   );
+      // console.log( seededSongs );
       
       const filteredSeeds = seededSongs.filter(element => element !== null);
 
       //   append all arrays to song array 
       songArray = [ ...songArray, ...filteredSeeds ];
+      console.log( songArray );
+      
       
     //@ts-ignore
     const songParams = await trackParams( token, songArray.map( item => {      

@@ -20,7 +20,8 @@ const seedSongs = async ( token : string, trackIds : Array<SpotifyApi.TrackLinkO
     return data ;
   } else {
     console.log("Error : Cannot seed tracks");
-    console.log( response );
+    console.log( response.status );
+    return null;
   };
 };
 
@@ -68,13 +69,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         })
         //@ts-ignore
         const recs = await seedSongs( token, trackIds );
-        if( recs ) {          
           return recs;
-        }
       })
       );
+      
+      const filteredSeeds = seededSongs.filter(element => element !== null);
+
       //   append all arrays to song array 
-      songArray = [ ...songArray, ...seededSongs ]
+      songArray = [ ...songArray, ...filteredSeeds ];
       
     //@ts-ignore
     const songParams = await trackParams( token, songArray.map( item => {      

@@ -46,8 +46,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const seededSongs = [ ];
     for ( let i = 0; i < splitSongArray.length; i++ ) {
 
-      await sleep( 1000 );
-      console.log( i );
+      // await sleep( 1000 );
       
       const coupledSongs = splitSongArray[i];
       const trackIds = coupledSongs.map( item  => item.track.id );

@@ -45,7 +45,7 @@ const MainFrame = ({ token }: { token: string; }) => {
         {listOfSongs.map((song) => (
           //@ts-ignore
           <li key={song.track.id} style={{ marginBottom: '10px' }} onClick={() => handleSongClick(song)}>
-          
+            { song._type }<br/>
             <strong>{song.track.name}</strong>{song.track.explicit}&nbsp;&nbsp;
             
             BPM: {Math.round(song.audioFeats.tempo)}&nbsp;&nbsp;

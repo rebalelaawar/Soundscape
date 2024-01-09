@@ -1,4 +1,5 @@
 export const seedSongs = async (token: string, trackIds: Array<SpotifyApi.TrackLinkObject>) => {
+
   const seed = trackIds.join(',');
   const seedFetch = `https://api.spotify.com/v1/recommendations?seed_tracks=${seed}&limit=1`;
 
@@ -20,3 +21,19 @@ export const seedSongs = async (token: string, trackIds: Array<SpotifyApi.TrackL
       throw error;
   }
 };
+
+export const trackParams = async ( token : string, trackIds : Array<any> ) => {
+    const paramFetch = `https://api.spotify.com/v1/audio-features?ids=${ trackIds.join(',') }`;
+    const response = await fetch( paramFetch, { headers: { Authorization: 'Bearer ' + token } });
+    
+    if( response.status === 200 ) {
+      const data = await response.json( );
+      const songParamsHash = { };
+      //@ts-ignore
+      data.audio_features.forEach(( params : any ) => songParamsHash[ params.id ] = params );
+      return songParamsHash;
+    } else console.log( response.status );
+  };
+
+
+

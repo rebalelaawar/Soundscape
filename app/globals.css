@@ -117,13 +117,6 @@ main {
 h1 {
   text-align: center;
 }
-@keyframes moveLeftAndRight {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(200px); /* Adjust the distance to move left and right */
-  }
-}
+
 
 

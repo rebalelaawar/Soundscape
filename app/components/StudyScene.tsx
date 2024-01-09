@@ -1,7 +1,8 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Text } from "@react-three/drei";
-import { TextureLoader } from "three";
+import { TextureLoader, ShaderMaterial } from "three";
+import SceneWorker from "./WorkerExport";
 
 //@ts-ignore
 const Circle = ({ position, radius, speed, albumArtUrl }) => {
@@ -34,6 +35,7 @@ const Circle = ({ position, radius, speed, albumArtUrl }) => {
     </mesh>
   );
 };
+
 
 const Inside = () => {
   const circles = [

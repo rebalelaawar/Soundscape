@@ -1,45 +1,67 @@
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useRef, Ref } from "react";
+import { Text } from "@react-three/drei";
 
 
 const Inside = ( ) => {
-    const bluePlane = useRef( );
-    const bluePlaneDir = useRef( false );
+
+    const greenCircle = useRef();
+    const greenCircleDir = useRef( false );
+    const purpleCircle = useRef()
+    const purpleCircleDir = useRef( false );
+
+   
+    
     useFrame(( ) => {
         // console.log("hi");
-        console.log( bluePlane.current.position.x );
-        
-        if( !bluePlaneDir.current ) {
+        // console.log( bluePlane.current.position.x );
 
-            bluePlane.current.position.x += 1; 
-            if( bluePlane.current.position.x > 30 ) {
-                bluePlaneDir.current = true;
+        //@ts-ignore
+        if (!greenCircleDir.current) {
+            greenCircle.current.position.x += 0.5;
+            if ( greenCircle.current.position.x > 80) {
+                greenCircleDir.current = true;
             }
+        
         } else {
-            bluePlane.current.position.x -= 1; 
-            if( bluePlane.current.position.x < -30 ) {
-                bluePlaneDir.current = false;
+            greenCircle.current.position.x -= 0.5;
+            if ( greenCircle.current.position.x < -80) {
+                greenCircleDir.current = false;
             }
 
         }
+        if (!purpleCircleDir.current) {
+            purpleCircle.current.position.x += 0.3;
+            if (purpleCircle.current.position.x > 40) {
+              purpleCircleDir.current = true;
+            }
+          } else {
+            purpleCircle.current.position.x -= 0.3;
+            if (purpleCircle.current.position.x < -40) {
+              purpleCircleDir.current = false;
+            }
+          }
+        
+        
     });
 
-    return <>
-        <mesh>
-            <planeGeometry args={[ 15, 5 ]}/>
-            <meshBasicMaterial color={"red"}/>
-        </mesh>
-        <mesh ref={ bluePlane } position={[ 15, 0, 0]}>
-            <planeGeometry args={[ 15, 5 ]}/>
-            <meshBasicMaterial color={"blue"}/>
-        </mesh>    
-        <mesh position={[ -15, 0, 1]}>
-            <circleGeometry args={[ 15, 5 ]}/>
-            <meshBasicMaterial color={"yellow"}/>
-        </mesh>    
-    </>;
+    return <> 
+    <mesh ref={greenCircle} position={[50,0,-10]}>
+        <circleGeometry args={[5,32]}/>
+        <meshBasicMaterial color={"green"}/>
+        <Text position={[0,0,0]} color="black" fontSize={3.5}>
+             Recommendations
+            </Text>
+    </mesh>
+    <mesh ref ={purpleCircle} position={[40, 0, -8]}>
+        <circleGeometry args={[5,32]}/>
+        <meshBasicMaterial color={"purple"}/>
+        <Text position={[0,0,0]} color="black" fontSize={3.5}>
+        Liked Songs
+        </Text>
+    </mesh>
+</>;
 }
-
 const StudyScene = ( ) => {
 
     return <div style={{ position: "fixed", top: 0, zIndex: -1 }}>

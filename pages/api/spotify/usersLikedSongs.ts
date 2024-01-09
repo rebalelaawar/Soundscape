@@ -27,7 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
 
     let songArray = [ ];
-    const tracksUserHasLiked = await fetch(`https://api.spotify.com/v1/me/tracks?limit=30`, { headers: { Authorization: 'Bearer ' + token }})
+    const tracksUserHasLiked = await fetch(`https://api.spotify.com/v1/me/tracks?limit=20`, { headers: { Authorization: 'Bearer ' + token }})
       .then((r) => { if (r.status === 200) return r.json(); else throw r; });
     //@ts-ignore
     songArray = [ ...tracksUserHasLiked.items.map(( track : SpotifyApi.TrackObjectFull ) => ({ _type: "userLikedSong", ...track }) ) ];
@@ -42,7 +42,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     //   get seed songs of each array we just split
-
+    //@ts-ignore
     const seededSongs = [ ];
     for ( let i = 0; i < splitSongArray.length; i++ ) {
 
@@ -70,7 +70,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     //   })
     //   );
       // console.log( seededSongs );
-      
+      //@ts-ignore
       const filteredSeeds = seededSongs.filter(element => element !== null);
 
       //   append all arrays to song array 

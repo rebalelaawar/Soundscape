@@ -7,19 +7,21 @@ const MainFrame = ({ token }: { token: string; }) => {
 
   const [listOfSongs, setSongList] = useState(DummySongs);
   const [currentSong, setCurrentSong] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
 
   const getSomeLikedSongs = async () => {
     const userLikedSongs = await fetch(`/api/spotify/usersLikedSongs/?token=${token}`)
     const data = await userLikedSongs.json();
     const songsArray = data.songArray;
-    console.log(songsArray);
     setSongList(songsArray);
   };
   
   useEffect(() => {
     // getSomeLikedSongs();
   }, [token]);
+
 //@ts-ignore
   const handleSongClick = (song) => {
     if (audioRef.current) {
@@ -35,31 +37,35 @@ const MainFrame = ({ token }: { token: string; }) => {
     }
   };
 
-  return <>
-    <div>
-      <main style={{ textAlign: 'center', marginTop: '50px', fontSize: '2em', color: 'green' }}>
-        <strong>Soundscape</strong>
-      </main>
+  return (
+    <>
+      <div>
+        <main style={{ textAlign: 'center', marginTop: '50px', fontSize: '2em', color: 'green' }}>
+          <strong>Soundscape</strong>
+        </main>
+        <ul style={{ listStyleType: 'none', padding: 0, color: "lightgreen" }}>
+          {listOfSongs.map((song) => (
+            <li
+              key={song.track.id}
+              style={{ marginBottom: '10px', cursor: isHovered ? 'pointer' : 'default' }}
+              onClick={() => handleSongClick(song)}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              { song._type }<br />
+              <strong>{song.track.name}</strong>{song.track.explicit}&nbsp;&nbsp;
+              
+              BPM: {Math.round(song.audioFeats.tempo)}&nbsp;&nbsp;
 
-      <p>List of Liked Songs:</p>
-      ------------------------------
-      <ul style={{ listStyleType: 'none', padding: 0, color: "lightgreen",}}>
-        {listOfSongs.map((song) => (
-          //@ts-ignore
-          <li key={song.track.id} style={{ marginBottom: '10px' }} onClick={() => handleSongClick(song)}>
-            { song._type }<br/>
-            <strong>{song.track.name}</strong>{song.track.explicit}&nbsp;&nbsp;
-            
-            BPM: {Math.round(song.audioFeats.tempo)}&nbsp;&nbsp;
-    
-            <audio id="audioPlayer" ref={audioRef} style={{ display: "none" }} />
-          </li>
-        ))}
-      </ul>
-    </div>
+              <audio id="audioPlayer" ref={audioRef} style={{ display: "none" }} />
+            </li>
+          ))}
+        </ul>
+      </div>
 
-    <StudyScene/>
-    </>;
+      <StudyScene />
+    </>
+  );
 };
 
 

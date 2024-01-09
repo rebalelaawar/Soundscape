@@ -1,5 +1,13 @@
-'use client'
+ 'use client'
 import React from 'react';
+
+const Header = () => {
+  return (
+    <div style={{ background: 'darkgreen', color: 'black', padding: '7px', textAlign: 'center',}}>
+      <h1><strong>Soundscape</strong></h1>
+    </div>
+  );
+};
 
 const LoginCard = ({ client_id }: { client_id: string }) => {
   const handleLogin = () => {
@@ -9,19 +17,14 @@ const LoginCard = ({ client_id }: { client_id: string }) => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+      <Header />
+      ----------------
       <button
-        style={{
-          padding: '15px 20px', 
-          fontSize: '1.2em', 
-          backgroundColor: 'darkgreen', 
-          color: 'silver',
-          border: 'none',
-          cursor: 'pointer',
-        }}
+        style={{ padding: '15px 20px', fontSize: '1.2em', backgroundColor: 'darkgreen', color: 'black', border: 'none', cursor: 'pointer' }}
         onClick={handleLogin}
       >
-        Login with Spotify
+        <strong>Login with Spotify</strong>
       </button>
     </div>
   );

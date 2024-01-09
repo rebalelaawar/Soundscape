@@ -102,9 +102,6 @@ a {
   }
 }
 
-body {
-  background: linear-gradient(to right, #431f52, #155931);
-}
 main {
   text-align: center;
   margin-top: 50px;
@@ -117,6 +114,14 @@ main {
 h1 {
   text-align: center;
 }
+
+#flex {
+  display: grid;
+  text-decoration: revert;
+  padding: inherit;
+  background-color: darkgoldenrod;
+}
+
 
 
 

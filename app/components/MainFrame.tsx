@@ -37,33 +37,37 @@ const MainFrame = ({ token }: { token: string; }) => {
     }
   };
 
+  const songList = <ul style={{ listStyleType: 'none', padding: 0, color: "lightgreen" }}>
+    {listOfSongs.map((song) => (
+      <li
+        key={song.track.id}
+        style={{ marginBottom: '10px', cursor: isHovered ? 'pointer' : 'default' }}
+        onClick={() => handleSongClick(song)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        { song._type }<br />
+        <strong>{song.track.name}</strong>{song.track.explicit}&nbsp;&nbsp;
+        
+        BPM: {Math.round(song.audioFeats.tempo)}&nbsp;&nbsp;
+
+        <audio id="audioPlayer" ref={audioRef} style={{ display: "none" }} />
+      </li>
+    ))}
+  </ul>;
+
   return (
     <>
       <div>
         <main style={{ textAlign: 'center', marginTop: '50px', fontSize: '2em', color: 'green' }}>
           <strong>Soundscape</strong>
         </main>
-        <ul style={{ listStyleType: 'none', padding: 0, color: "lightgreen" }}>
-          {listOfSongs.map((song) => (
-            <li
-              key={song.track.id}
-              style={{ marginBottom: '10px', cursor: isHovered ? 'pointer' : 'default' }}
-              onClick={() => handleSongClick(song)}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              { song._type }<br />
-              <strong>{song.track.name}</strong>{song.track.explicit}&nbsp;&nbsp;
-              
-              BPM: {Math.round(song.audioFeats.tempo)}&nbsp;&nbsp;
-
-              <audio id="audioPlayer" ref={audioRef} style={{ display: "none" }} />
-            </li>
-          ))}
-        </ul>
+        <StudyScene />
+        {
+          // songList
+        }
       </div>
 
-      <StudyScene />
     </>
   );
 };

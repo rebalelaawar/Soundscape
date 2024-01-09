@@ -2,7 +2,6 @@
 import * as d3 from 'd3';
 import { CameraPositon } from '../../WebGLMap';
 import { Simulation } from 'd3';
-import TileManager from './utils/TileManager';
 
 
 

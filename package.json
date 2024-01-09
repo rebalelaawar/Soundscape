@@ -21,6 +21,7 @@
     "node": "^21.2.0",
     "react": "^18",
     "react-dom": "^18",
+    "sass": "^1.69.7",
     "three": "^0.160.0"
   },
   "devDependencies": {

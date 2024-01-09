@@ -1,0 +1,64 @@
+#Main {
+    position: fixed;
+    // top: 0;
+    bottom: 0 !important;
+    left: 0;
+
+    --padding-value: 15px;
+    width: calc( 100vw - ( var(--padding-value) * 2 ));
+    padding: var(--padding-value);
+    padding-bottom: calc( env(safe-area-inset-bottom) + 5px );
+
+    backdrop-filter: blur(20px) saturate( 100 );
+    backdrop-filter: blur(10px) saturate( 20 );
+    // backdrop-filter: blur(10px) saturate( 20 ) brightness(2);
+
+    z-index: 1;
+    
+    box-shadow: inset 0px 2px 3px var(--appBackgroundColor);
+    // box-shadow: inset 0px 2px 3px var(--appBackgroundColor), inset 0px -5vh 23px var(--appBackgroundColor);
+
+    border-radius: 25px 25px 0 0;
+    transition: height 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    // outline: 1px solid rgb(255, 255, 255);
+    
+    span {
+        background-color: var(--appBackgroundColor);
+        background-color: color-mix(in srgb, var(--appBackgroundColor), transparent 20% );
+    }
+    #PullIndicator {
+        width: 70px;
+        height: 5px;
+        border-radius: 100vh;
+        background-color: var(--appBackgroundColor);
+        box-shadow: inset 0px 1px 3px var(--appTextColor);
+        opacity: 0.5;
+    }
+
+    #PlayBackControls {
+        font-family: AeonikMono-Regular, monospace;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        #PlayBtnHolster {
+            filter: drop-shadow( 0px 0px 9px var(--appBackgroundColor));
+
+            // background-color: red;
+            > button {
+                height: 40px;
+                width: 40px;
+                background-color: var(--appTextColor);
+                border: none;
+                clip-path: polygon( 0 0, 100% 50%, 0% 100%);
+            }
+    
+        }
+    
+    }
+
+}

@@ -1,37 +1,10 @@
-import { useSearchParams } from 'next/navigation'
-import LoginCard from '../components/LoginCard';
 import Link from 'next/link';
-import MainFrame from '../components/MainFrame';
-
-
-
-const Space = async ({ searchParams } : { searchParams: { [key: string]: string | string[] | undefined }}) => {
-
-  if( "code" in searchParams) {
-
-    const { code: authorizationCode } = searchParams;
-    const [ client_id, client_secret ] = [ process.env.CLIENT_ID, process.env.CLIENT_SECRET ];
-    const request = {
-      method: 'POST',
-      //@ts-ignore
-      body: new URLSearchParams({ code: authorizationCode, redirect_uri: 'http://localhost:3010/space', grant_type: 'authorization_code', scope: 'user-library-read' }),
-      headers: { 'Authorization': `Basic ${ btoa(`${ client_id }:${ client_secret }`) }`, 'Content-Type': 'application/x-www-form-urlencoded' }
+import Wrapper from './appWrapper';
+const Page = async ({ searchParams } : any ) => { 
+    if ( "code" in searchParams ) {
+        //do token stuff again
+        return <Wrapper token={"put it here"}/>;
     };
-    const token : string = await fetch( 'https://accounts.spotify.com/api/token', request )
-    .then(response => response.json( ))
-    .then( data => data.access_token )
-    .catch( error => console.error( 'Error exchanging authorization code for access token:', error ));
-
-    
-    return <MainFrame token={ token }/>;
-
-  };
-  
-
-  return <div>
-    Please <Link href={ '/login' }>LOGIN</Link>
-  </div>;
-
+    return <div>Please <Link href="/login">Login</Link></div>;
 };
-
-export default Space;
+export default Page;

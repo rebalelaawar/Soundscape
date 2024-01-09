@@ -1,0 +1,18 @@
+#SceneWrapper {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    top: 0;
+    #Draw {
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        left: -100vw;
+        left: 50%;
+        // filter: saturate(0);
+        top: 0;    
+        background-color: transparent;
+        visibility: hidden;
+    }
+}

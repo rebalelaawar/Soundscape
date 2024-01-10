@@ -19,10 +19,11 @@ const Listener = ({ audioContext, darkMode } : props ) => {
         if( darkMode ) _uiColors({ textColor: new THREE.Vector3( 1, 1, 1 ), backGroundColor: new THREE.Vector3( 0, 0, 0 )})
         else _uiColors({ textColor: new THREE.Vector3( 0, 0, 0 ), backGroundColor: new THREE.Vector3( 1, 1, 1 )});
     }, [ darkMode ]);
-
+    //@ts-ignore
     const updatingEntireSubRender = ( size ) => {
         if( !texture || !subDreamHelperMesh.current) return
         dreamWorker.current?.postMessage({ operation: "Render", params: { screenDims: size }});
+        //@ts-ignore
         subDreamHelperMesh.current.material.uniforms.uTexture.value.dispose();
     }
 
@@ -53,14 +54,16 @@ const Listener = ({ audioContext, darkMode } : props ) => {
 
             dreamCanvas.current.position.set( camera.position.x, camera.position.y, 1 );
             dreamCanvas.current.scale.set( viewBoxDims.w, viewBoxDims.h, 1 );
+            //@ts-ignore
             subDreamHelperMesh.current.scale.set( viewBoxDims.w, viewBoxDims.h, 1 );
+            //@ts-ignore
             subDreamHelperMesh.current.position.set( camera.position.x, camera.position.y, -1 );
 
 
                 //@ts-ignore
             if( dreamCanvas.current.material.uniforms ) {
                 if( !camera.userData.emitterLocations ) {
-                    camera.userData.emitterLocations = { };
+                    camera.userData.emitterLocations = {};
                     return;
                 };
                         

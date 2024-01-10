@@ -11,35 +11,20 @@ const Wrapper = ({ token } : { token: string; }) => {
     const [ play, _play ] = useState( false );
     const [ parsed, setParsed ] = useState<Array<JSX.Element>>([ ]);        
     const [ darkMode, set_theme ] = useState( false );
-    const [ songs, setSong ] = useState([ ]);
+    const [ songs, setSong ] = useState([]);
 
     const click = ( ) => _play( !play );
 
     const getSomeLikedSongs = async () => {
-
-         //Get songs again and put them here
-
-        console.log("using this token", token);
-        const response = await fetch("https://api.spotify.com/v1/me/tracks?limit=20", {
-          headers: {
-            Authorization: 'Bearer ' + token
-          }
-        })
-        console.log(response)
-        if (response.ok) {
-          const likedSongs = await response.json();
-          console.log(likedSongs)
-          setSong(likedSongs.items)
-        }
-        else {
-          console.error("Failed to fetch user tracks");
-        }
-      }
- 
+        const userLikedSongs = await fetch(`/api/spotify/usersLikedSongs/?token=${token}`)
+        const data = await userLikedSongs.json();
+        const songsArray = data.songArray;
+        setSong(songsArray);
+      };
+      
 
     useEffect(( ) => {
-        
-        getSomeLikedSongs()
+        // getSomeLikedSongs();
         set_theme(  window.matchMedia('(prefers-color-scheme: dark)').matches );
         const themeWatcher = window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => set_theme( e.matches ));
         console.warn("Should remove this ^");
@@ -57,6 +42,7 @@ const Wrapper = ({ token } : { token: string; }) => {
             <div>Welcome</div> 
             <div id={ s.RefreshBtnHolster }>
                 <div id={ s.RefreshBtn } onClick={( ) => window.location.reload( )}/>
+                
             </div>
         </div>
         <BottomBar onPlayBtn={ click }/>

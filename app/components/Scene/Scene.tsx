@@ -7,6 +7,7 @@ import TrackBubble from "./TrackBubbles/TrackBubble";
 import { Effects, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import Listener from './Listener/Listener';
+import DummySongs from '@/app/DummySongs';
 
 
 interface props {

@@ -151,7 +151,7 @@ const Listener = ({ audioContext, darkMode } : props ) => {
         </mesh>
         <mesh ref={ subDreamHelperMesh }>
                 <planeGeometry  args={[ 1, 1, 1 ]}/>
-                {/* <meshBasicMaterial color={[ 1, 0, 0 ]} opacity={1.0} transparent/> */}
+                <meshBasicMaterial color={"black"} opacity={1.0} transparent/>
         </mesh>
     </>;
 };

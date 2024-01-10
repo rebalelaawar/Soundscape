@@ -3,7 +3,7 @@ import { useFrame, useLoader, Vector3, useThree,  } from '@react-three/fiber';
 import * as THREE from 'three';
 import BubbleMat from '../shaders/BubbleMat';
 import { shaderMaterial } from '@react-three/drei';
-import { Outline } from '@react-three/postprocessing';
+
 
 interface props extends SpotifyApi.TrackObjectFull {
 

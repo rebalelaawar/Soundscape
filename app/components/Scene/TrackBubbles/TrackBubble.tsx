@@ -3,21 +3,25 @@ import { useFrame, useLoader, Vector3, useThree,  } from '@react-three/fiber';
 import * as THREE from 'three';
 import BubbleMat from '../shaders/BubbleMat';
 import { shaderMaterial } from '@react-three/drei';
+import { trackTypes } from '@/pages/api/spotify/usersLikedSongs';
 
 
 interface props extends SpotifyApi.TrackObjectFull {
-
   sendRef: Function;
-  
   context: AudioContext, 
   position: Vector3,
   play?: boolean; 
-
+  _type: trackTypes;
 };
 
 
-const TrackBubble = ({ id, sendRef, context, play, position, album, preview_url } : props ) => {
+const TrackBubble = ({ id, _type, sendRef, context, play, position, album, preview_url } : props ) => {
 
+  let moveSpeed = 0;
+  if( _type === trackTypes.recomended ) {
+    console.log( _type );
+    moveSpeed = 0.3;
+  };
 
   const albumArt = album.images[0].url;
 
@@ -46,10 +50,10 @@ const TrackBubble = ({ id, sendRef, context, play, position, album, preview_url 
           const { x, y } = meshRef.current.position;
 
           if( movingRight ) {
-            meshRef.current.position.x += 0.3;
+            meshRef.current.position.x += moveSpeed;
             if( meshRef.current.position.x > 100 ) _mr( false );
           } else {
-            meshRef.current.position.x -= 0.3;
+            meshRef.current.position.x -= moveSpeed;
             if( meshRef.current.position.x < -100 ) _mr( true );
           }
 

@@ -2,18 +2,18 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { seedSongs, trackParams } from './utils';
 interface Req extends NextApiRequest { headers: { }; query: { token: string; }; };
 
-//@ts-ignore
-
+export enum trackTypes {
+  'userLikedSongs', 'recomended'
+};
 
 export interface userLikedSong {
-  _type: "userLikedSong";
+  _type: trackTypes.userLikedSongs;
   added_at: string;
   track: SpotifyApi.TrackObjectFull;
 };
 
-
 export interface recomendedTrack {
-  _type: "recomended";
+  _type: trackTypes.recomended;
   track: SpotifyApi.TrackObjectFull;
   // seeds: Array<SpotifyApi.RecommendationsSeedObject>;
 };
@@ -33,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const tracksUserHasLiked = await fetch( `https://api.spotify.com/v1/me/tracks?limit=20`, { headers: { Authorization: 'Bearer ' + token }})
       .then((r) => { if (r.status === 200) return r.json(); else throw r; });
     //@ts-ignore
-    songArray = [ ...tracksUserHasLiked.items.map(( track : SpotifyApi.TrackObjectFull ) => ({ _type: "userLikedSong", ...track }) ) ];
+    songArray = [ ...tracksUserHasLiked.items.map(( track : SpotifyApi.TrackObjectFull ) => ({ _type: trackTypes.userLikedSongs, ...track }) ) ];
 
     const splitSongArray = [ ];
     for( let i = 0; i < songArray.length; i += 2 ) {
@@ -49,7 +49,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const trackIds = coupledSongs.map( item  => item.track.id );
       //@ts-ignore
       const recs : recomendedTrack = await seedSongs( token, trackIds );
-      recs.tracks.forEach( track => seededSongs.push({ _type: "recomended", track }));
+      recs.tracks.forEach( track => seededSongs.push({ _type: trackTypes.recomended, track }));
       
       // seededSongs.push(  );
     };

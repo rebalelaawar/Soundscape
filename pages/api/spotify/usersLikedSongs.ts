@@ -4,6 +4,24 @@ interface Req extends NextApiRequest { headers: { }; query: { token: string; }; 
 
 //@ts-ignore
 
+
+export interface userLikedSong {
+  _type: "userLikedSong";
+  added_at: string;
+  track: SpotifyApi.TrackObjectFull;
+};
+
+
+export interface recomendedTrack {
+  _type: "recomended";
+  track: SpotifyApi.TrackObjectFull;
+  // seeds: Array<SpotifyApi.RecommendationsSeedObject>;
+};
+
+export interface APIResponse {
+  songsArray: Array< recomendedTrack | userLikedSong >;
+};
+
 const sleep = ( delay : number ) => new Promise((resolve) => setTimeout(resolve, delay))
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -30,7 +48,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const coupledSongs = splitSongArray[i];
       const trackIds = coupledSongs.map( item  => item.track.id );
       //@ts-ignore
-      const recs : { tracks: Array<SpotifyApi.TrackObjectFull>, seeds: Array<SpotifyApi.RecommendationsSeedObject>} = await seedSongs( token, trackIds );
+      const recs : recomendedTrack = await seedSongs( token, trackIds );
       recs.tracks.forEach( track => seededSongs.push({ _type: "recomended", track }));
       
       // seededSongs.push(  );

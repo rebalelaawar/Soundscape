@@ -8,27 +8,28 @@ import { Effects, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import Listener from './Listener/Listener';
 import DummySongs from '@/app/DummySongs';
+import { recomendedTrack, userLikedSong } from '@/pages/api/spotify/usersLikedSongs';
 
 
 interface props {
     darkMode: boolean;
     play: boolean;
+    songs: Array< recomendedTrack | userLikedSong>;
 };
-const Scene = ({ play, darkMode } : props ) => {
 
+
+
+const Scene = ({ play, darkMode, songs } : props ) => {
+    
     const [ audioContext ] = useState(( ) => new AudioContext( ));
     const [ reverb, _reverb ] = useState(( ) => audioContext.createConvolver( ));
-
-    useEffect(( ) => { 
-        
-    }, [ ]);
+    
 
     const SceneRef = useRef( null );
 
     // const [ meshRefs, updateMeshRefs ] = useState<Ref<Array<THREE.Mesh>>>([ ]);
     const updateMshRefArray = ( ref : Ref<THREE.Mesh> ) => {
-        console.log( ref,"<<" );
-        // updateMeshRefs([ ref ]);
+
     };
 
 
@@ -44,11 +45,24 @@ const Scene = ({ play, darkMode } : props ) => {
         return samples.map(( track, i ) => <TrackBubble key={ track.id } sendRef={ updateMshRefArray } play={ play } position={[ (( Math.random( ) < 0.5 ? -1 : 1 ) * Math.random()*200), i*20 - 50, 0 ]} context={ audioContext } { ...track }/>);
     }
     
-    const [ bubbles, setBubbles ] = useState( bubblemaker( ));
-    useEffect(( ) => {
-        setBubbles( bubblemaker( ));
-    }, [ play ]);
+    const [ bubbles, setBubbles ] = useState<any>( );
+
+
+    const onBubble = ( ) => {
+        console.log( songs, "<<<<<<<<" );
     
+        const trackBubbles = songs.map(( s, i ) => {
+            return <TrackBubble key={ s.track.id } sendRef={ updateMshRefArray } play={ play } position={[ (( Math.random( ) < 0.5 ? -1 : 1 ) * Math.random()*200), i*20 - 50, 0 ]} context={ audioContext } { ...s.track }/>
+        });
+
+        setBubbles( trackBubbles );
+
+    };
+
+    useEffect(( ) => {
+        onBubble( );
+    }, [ play, songs ]);
+
 
     // https://github.com/pmndrs/react-three-offscreen
     return <div id={ s.SceneWrapper }>

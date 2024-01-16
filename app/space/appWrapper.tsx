@@ -19,12 +19,16 @@ const Wrapper = ({ token } : { token: string; }) => {
         const userLikedSongs = await fetch(`/api/spotify/usersLikedSongs/?token=${token}`)
         const data = await userLikedSongs.json();
         const songsArray = data.songArray;
+        console.log( songsArray );
+        
         setSong(songsArray);
-      };
+    };
       
 
     useEffect(( ) => {
-        // getSomeLikedSongs();
+        console.log("hello?");
+        
+        getSomeLikedSongs();
         set_theme(  window.matchMedia('(prefers-color-scheme: dark)').matches );
         const themeWatcher = window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => set_theme( e.matches ));
         console.warn("Should remove this ^");
@@ -34,7 +38,7 @@ const Wrapper = ({ token } : { token: string; }) => {
     return <div id={ s.Main }>
 
         <ClientOnly>
-            <Scene play={ play } darkMode={ darkMode }/>
+            <Scene play={ play } darkMode={ darkMode } songs={ songs }/>
         </ClientOnly>
 
 

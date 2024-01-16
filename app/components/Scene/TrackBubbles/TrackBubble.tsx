@@ -26,9 +26,7 @@ const TrackBubble = ({ id, sendRef, context, play, position, album, preview_url 
   const radius = 10; const widthSegments = 32; const heightSegments = 32; const phiStart = 0; const phiLength = Math.PI;
 
   useEffect(( ) => { 
-    console.log(meshRef);
-    sendRef( meshRef );
-    
+    sendRef( meshRef );    
   }, [ meshRef ]);
 
   useEffect(( ) => { 

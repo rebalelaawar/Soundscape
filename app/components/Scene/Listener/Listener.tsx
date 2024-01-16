@@ -55,9 +55,9 @@ const Listener = ({ audioContext, darkMode } : props ) => {
             dreamCanvas.current.position.set( camera.position.x, camera.position.y, 1 );
             dreamCanvas.current.scale.set( viewBoxDims.w, viewBoxDims.h, 1 );
             //@ts-ignore
-            subDreamHelperMesh.current.scale.set( viewBoxDims.w, viewBoxDims.h, 1 );
+            // subDreamHelperMesh.current.scale.set( viewBoxDims.w, viewBoxDims.h, 1 );
             //@ts-ignore
-            subDreamHelperMesh.current.position.set( camera.position.x, camera.position.y, -1 );
+            // subDreamHelperMesh.current.position.set( camera.position.x, camera.position.y, -1 );
 
 
                 //@ts-ignore
@@ -146,16 +146,16 @@ const Listener = ({ audioContext, darkMode } : props ) => {
     
         <mesh ref={ listenerMesh }>
             <circleGeometry args={[ 1 ]}/>
-            <meshBasicMaterial color={[ 1, 0, 1 ]} opacity={0.0} transparent/>
+            <meshBasicMaterial color={[ 1, 1, 1 ]} opacity={1.0}/>
         </mesh>
         <mesh ref={ dreamCanvas }>
-                <planeGeometry  args={[ 1, 1, 1 ]}/>
+                <planeGeometry args={[ 1, 1, 1 ]}/>
                 {/* <primitive ref={ DreamMat } attach="material" args={[DreamShader] } /> */}
         </mesh>
-        <mesh ref={ subDreamHelperMesh }>
+        {/* <mesh ref={ subDreamHelperMesh }>
                 <planeGeometry  args={[ 1, 1, 1 ]}/>
                 <meshBasicMaterial color={"black"} opacity={1.0} transparent/>
-        </mesh>
+        </mesh> */}
     </>;
 };
 

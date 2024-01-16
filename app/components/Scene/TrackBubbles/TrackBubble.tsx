@@ -165,7 +165,7 @@ const TrackBubble = ({ id, _type, sendRef, context, play, position, album, previ
   }, [ play ]);
 
 
-  return <group ref={ meshRef } position={ position }>
+  return <group ref={ meshRef } position={ position } onPointerOver={() => console.log( _type )}>
       {/* <mesh>
         <planeGeometry args={[ radius*5, radius*5 ]}/>
         <meshBasicMaterial map={ texture } />

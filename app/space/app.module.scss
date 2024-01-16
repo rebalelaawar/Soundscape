@@ -17,6 +17,8 @@
     top: 0; left: -5px;
     right: -5px;
     padding: env(safe-area-inset-top) 10px 4px 10px;
+    padding-top: minmax( 50px, 100px );
+    // padding-top: 200px;
     // width: 100%;
     backdrop-filter: blur(10px) saturate(20);
     font-size: 30px;

@@ -7,7 +7,8 @@ import TrackBubble from "./TrackBubbles/TrackBubble";
 import { Effects, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import Listener from './Listener/Listener';
-import DummySongs from '@/app/DummySongs';
+import handler from '@/pages/api/spotify/usersLikedSongs';
+
 
 
 interface props {
@@ -21,6 +22,7 @@ const Scene = ({ play, darkMode } : props ) => {
 
     useEffect(( ) => { 
         
+        
     }, [ ]);
 
     const SceneRef = useRef( null );
@@ -30,11 +32,13 @@ const Scene = ({ play, darkMode } : props ) => {
         console.log( ref,"<<" );
         // updateMeshRefs([ ref ]);
     };
+    
 
 
     const bubblemaker = ( ) => {
 
         const checkSong = ( track : SpotifyApi.TrackObjectFull ) => {
+
             
         };
 
@@ -45,7 +49,18 @@ const Scene = ({ play, darkMode } : props ) => {
     }
     
     const [ bubbles, setBubbles ] = useState( bubblemaker( ));
+
     useEffect(( ) => {
+        const fetchSongArray = async (token : string) => {
+            try {
+                const response = await fetch(`/api/spotify?token=${token}`)
+                const data = await response.json();
+                const songArray = data.songArray
+            }
+            catch(error) {
+                console.log(error)
+            }
+        }
         setBubbles( bubblemaker( ));
     }, [ play ]);
     

@@ -12,8 +12,8 @@ const BottomBar = ({ onPlayBtn } : props ) => {
         <div id={ s.PlayBackControls }>
             
             <div>
-                <span>Jacques Greene</span><br/>
-                <span>Relay</span>
+                <span><strong>Click Bottom Right To Play</strong></span><br/>
+                <span>Click Top Right To Reset</span>
             </div>
 
             <div id={ s.PlayBtnHolster }><button onClick={( ) => onPlayBtn( )}/></div>

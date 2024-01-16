@@ -1,3 +1,24 @@
+export const getUserLikedSongs = async ( token : string, limit: number ) : Promise<Array<SpotifyApi.TrackLinkObject>> => {
+    
+  const req = await fetch(`https://api.spotify.com/v1/me/tracks?limit=${ limit }`, { headers: { Authorization: 'Bearer ' + token }})
+  .then((r) => { if (r.status === 200) return r.json(); else throw r; });
+  return req;
+};
+
+export const trackParams = async ( token : string, trackIds : Array<any> ) => {
+
+  const paramFetch = `https://api.spotify.com/v1/audio-features?ids=${ trackIds.join(',') }`;
+  const response = await fetch( paramFetch, { headers: { Authorization: 'Bearer ' + token } });
+  
+  if( response.status === 200 ) {
+    const data = await response.json( );
+    const songParamsHash = { };
+    //@ts-ignore
+    data.audio_features.forEach(( params : any ) => songParamsHash[ params.id ] = params );
+    return songParamsHash;
+  } else console.log( response.status );
+};
+
 export const seedSongs = async (token: string, trackIds: Array<SpotifyApi.TrackLinkObject>) => {
 
   const seed = trackIds.join(',');
@@ -22,26 +43,6 @@ export const seedSongs = async (token: string, trackIds: Array<SpotifyApi.TrackL
   }
 };
 
-export const trackParams = async ( token : string, trackIds : Array<any> ) => {
-
-    const paramFetch = `https://api.spotify.com/v1/audio-features?ids=${ trackIds.join(',') }`;
-    const response = await fetch( paramFetch, { headers: { Authorization: 'Bearer ' + token } });
-    
-    if( response.status === 200 ) {
-      const data = await response.json( );
-      const songParamsHash = { };
-      //@ts-ignore
-      data.audio_features.forEach(( params : any ) => songParamsHash[ params.id ] = params );
-      return songParamsHash;
-    } else console.log( response.status );
-  };
-
-  export const getUserLikedSongs = async ( token : string, limit: number ) : Promise<Array<SpotifyApi.TrackLinkObject>> => {
-    
-    const req = await fetch(`https://api.spotify.com/v1/me/tracks?limit=${ limit }`, { headers: { Authorization: 'Bearer ' + token }})
-    .then((r) => { if (r.status === 200) return r.json(); else throw r; });
-    return req;
-};
 
 
 

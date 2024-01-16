@@ -1,8 +1,8 @@
-import { useRef, useMemo, useEffect, useState } from 'react';
+import { useRef, useMemo, useEffect, useState} from 'react';
 import { useFrame, useLoader, Vector3, useThree,  } from '@react-three/fiber';
 import * as THREE from 'three';
 import BubbleMat from '../shaders/BubbleMat';
-import { shaderMaterial } from '@react-three/drei';
+import { shaderMaterial, Text } from '@react-three/drei';
 
 
 interface props extends SpotifyApi.TrackObjectFull {
@@ -17,7 +17,7 @@ interface props extends SpotifyApi.TrackObjectFull {
 
 
 const TrackBubble = ({ id, sendRef, context, play, position, album, preview_url } : props ) => {
-
+  const textPositionOffset = [0, 30, 0];
 
   const albumArt = album.images[0].url;
 
@@ -26,7 +26,7 @@ const TrackBubble = ({ id, sendRef, context, play, position, album, preview_url 
   const radius = 10; const widthSegments = 32; const heightSegments = 32; const phiStart = 0; const phiLength = Math.PI;
 
   useEffect(( ) => { 
-    console.log(meshRef);
+    // console.log(meshRef);
     sendRef( meshRef );
     
   }, [ meshRef ]);

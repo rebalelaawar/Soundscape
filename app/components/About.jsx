@@ -5,7 +5,7 @@ const AboutComponent = () => {
     <>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: '70px' }}>
         <h1 style={{ textAlign: "center", color: "lightblue", fontFamily: "monospace" }}><strong>About</strong></h1>
-        <p style={{ textAlign: "center", fontSize: "27px", fontFamily: "monospace" }}>Experience music like never before. Soundscape brings together cutting-edge spatial audio technology and stunning visualizations to redefine your music exploration.</p>
+        <p style={{ textAlign: "center", fontSize: "27px", fontFamily: "monospace" }}> Soundscape brings together cutting-edge spatial audio technology and stunning visualizations to redefine your music exploration.</p>
         <br></br>
       </div>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: '50px' }}>
@@ -17,6 +17,8 @@ const AboutComponent = () => {
         <br></br>
         <br></br>
         <h1 style={{ textAlign: "center", color: "lightblue", fontFamily: "monospace", fontSize: "22px" }}><strong>Visual Features</strong></h1>
+        <li style={{ textAlign: "center", fontSize: "20px", fontFamily: "monospace" }}>Circle geometry created in 3JS with album art as texture</li>
+        
       </div>
     </>
   );

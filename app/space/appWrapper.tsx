@@ -39,7 +39,7 @@ const Wrapper = ({ token } : { token: string; }) => {
 
 
         <div id={ s.TopArea }>
-            <div>Welcome</div> 
+            <div>Soundscape</div> 
             <div id={ s.RefreshBtnHolster }>
                 <div id={ s.RefreshBtn } onClick={( ) => window.location.reload( )}/>
                 

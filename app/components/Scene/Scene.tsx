@@ -38,13 +38,8 @@ const Scene = ({ play, darkMode, songs } : props ) => {
 
     const onBubble = ( ) => {
         console.log( songs, "<<<<<<<<" );
-    
-        const trackBubbles = songs.map(( s, i ) => {
-            return <TrackBubble key={ s.track.id } _type={ s._type } sendRef={ updateMshRefArray } play={ play } position={[ (( Math.random( ) < 0.5 ? -1 : 1 ) * Math.random()*200), i*20 - 50, 0 ]} context={ audioContext } { ...s.track }/>
-        });
-
+        const trackBubbles = songs.map(( s, i ) => <TrackBubble key={ s.track.id } _type={ s._type } sendRef={ updateMshRefArray } play={ play } position={[ (( Math.random( ) < 0.5 ? -1 : 1 ) * Math.random()*200), i*20 - 50, 0 ]} context={ audioContext } { ...s.track }/> );
         setBubbles( trackBubbles );
-
     };
 
     useEffect(( ) => {

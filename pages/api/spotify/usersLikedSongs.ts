@@ -3,7 +3,7 @@ import { seedSongs, trackParams } from './utils';
 interface Req extends NextApiRequest { headers: { }; query: { token: string; }; };
 
 export enum trackTypes {
-  'userLikedSongs', 'recomended'
+  userLikedSongs = 'userLikedSongs', recomended = 'recomended'
 };
 
 export interface userLikedSong {

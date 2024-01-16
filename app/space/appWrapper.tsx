@@ -18,16 +18,12 @@ const Wrapper = ({ token } : { token: string; }) => {
     const getSomeLikedSongs = async () => {
         const userLikedSongs = await fetch(`/api/spotify/usersLikedSongs/?token=${token}`)
         const data = await userLikedSongs.json();
-        const songsArray = data.songArray;
-        console.log( songsArray );
-        
+        const songsArray = data.songArray;        
         setSong(songsArray);
     };
       
 
-    useEffect(( ) => {
-        console.log("hello?");
-        
+    useEffect(( ) => {        
         getSomeLikedSongs();
         set_theme(  window.matchMedia('(prefers-color-scheme: dark)').matches );
         const themeWatcher = window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => set_theme( e.matches ));

@@ -15,7 +15,7 @@ interface props extends SpotifyApi.TrackObjectFull {
 };
 
 
-const TrackBubble = ({ id, _type, sendRef, context, play, position, album, name, preview_url, onHover  } : any ) => {
+const TrackBubble = ({ id, _type, sendRef, context, play, position, album, name,artists, preview_url, onHover  } : any ) => {
 
   let moveSpeed = 0;
   if( _type === trackTypes.recomended ) {

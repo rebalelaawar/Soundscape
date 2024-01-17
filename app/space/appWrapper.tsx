@@ -2995,8 +2995,13 @@ const Wrapper = ({ token } : { token: string; }) => {
     const [ parsed, setParsed ] = useState<Array<JSX.Element>>([ ]);        
     const [ darkMode, set_theme ] = useState( false );
     const [ songs, setSong ] = useState(samples);
+    const [hoveredAlbum, setHoveredAlbum] = useState('');
 
     const click = ( ) => _play( !play );
+
+    const handleHover = (albumName: string) => {
+        setHoveredAlbum(albumName);
+    };
 
     const getSomeLikedSongs = async () => {
         const userLikedSongs = await fetch(`/api/spotify/usersLikedSongs/?token=${token}`)
@@ -3017,7 +3022,7 @@ const Wrapper = ({ token } : { token: string; }) => {
     return <div id={ s.Main }>
 
         <ClientOnly>
-            <Scene play={ play } darkMode={ darkMode } songs={ songs }/>
+            <Scene play={ play } darkMode={ darkMode } songs={ songs } onHover={handleHover}/>
         </ClientOnly>
 
 
@@ -3028,7 +3033,7 @@ const Wrapper = ({ token } : { token: string; }) => {
                 
             </div>
         </div>
-        <BottomBar onPlayBtn={ click }/>
+        <BottomBar onPlayBtn={ click } hoveredAlbum={hoveredAlbum}/>
     </div>;
 };
 

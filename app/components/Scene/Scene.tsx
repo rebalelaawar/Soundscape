@@ -19,7 +19,7 @@ interface props {
 
 
 
-const Scene = ({ play, darkMode, songs } : props ) => {
+const Scene = ({ play, darkMode, songs, onHover  } : any ) => {
     
     const [ audioContext ] = useState(( ) => new AudioContext( ));
     const [ reverb, _reverb ] = useState(( ) => audioContext.createConvolver( ));
@@ -36,9 +36,11 @@ const Scene = ({ play, darkMode, songs } : props ) => {
     const [ bubbles, setBubbles ] = useState<any>( );
 
 
+
+
     const onBubble = ( ) => {
         console.log( songs, "<<<<<<<<" );
-        const trackBubbles = songs.map(( s, i ) => <TrackBubble key={ s.track.id } _type={ s._type } sendRef={ updateMshRefArray } play={ play } position={[ (( Math.random( ) < 0.5 ? -1 : 1 ) * Math.random()*200), i*20 - 50, 0 ]} context={ audioContext } { ...s.track }/> );
+        const trackBubbles = songs.map(( s, i ) => <TrackBubble key={ s.track.id } _type={ s._type } sendRef={ updateMshRefArray } play={ play } position={[ (( Math.random( ) < 0.5 ? -1 : 1 ) * Math.random()*200), i*20 - 50, 0 ]} context={ audioContext } { ...s.track } onHover={onHover} name={s.track.name} /> );
         setBubbles( trackBubbles );
     };
 

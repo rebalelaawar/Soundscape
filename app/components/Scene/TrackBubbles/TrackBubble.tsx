@@ -15,13 +15,16 @@ interface props extends SpotifyApi.TrackObjectFull {
 };
 
 
-const TrackBubble = ({ id, _type, sendRef, context, play, position, album, preview_url } : props ) => {
+const TrackBubble = ({ id, _type, sendRef, context, play, position, album, name, preview_url, onHover  } : any ) => {
 
   let moveSpeed = 0;
   if( _type === trackTypes.recomended ) {
-    console.log( _type );
+    // console.log( _type );
     moveSpeed = 0.3;
   };
+  const handleHover = () => {
+    onHover(name);
+};
 
   const albumArt = album.images[0].url;
 
@@ -150,6 +153,7 @@ const TrackBubble = ({ id, _type, sendRef, context, play, position, album, previ
           }
       });
 
+
       return ( ) => {
           console.log("removing events");
           
@@ -164,8 +168,7 @@ const TrackBubble = ({ id, _type, sendRef, context, play, position, album, previ
     playPreview( );
   }, [ play ]);
 
-
-  return <group ref={ meshRef } position={ position } onPointerOver={() => console.log( _type )}>
+  return <group ref={ meshRef } position={ position }onPointerOver={handleHover} >
       {/* <mesh>
         <planeGeometry args={[ radius*5, radius*5 ]}/>
         <meshBasicMaterial map={ texture } />

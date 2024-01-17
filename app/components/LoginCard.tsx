@@ -3,7 +3,7 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <div style={{ background: 'darkgreen', color: 'black', padding: '7px', textAlign: 'center',}}>
+    <div style={{ background: 'black', fontFamily:"monospace", color: 'lightblue', padding: '7px', textAlign: 'center',}}>
       <h1><strong>Soundscape</strong></h1>
     </div>
   );
@@ -21,7 +21,7 @@ const LoginCard = ({ client_id }: { client_id: string }) => {
       <Header />
     <br></br>
       <button
-        style={{ padding: '15px 20px', fontSize: '1.2em', backgroundColor: 'darkgreen', color: 'black', border: 'none', cursor: 'pointer' }}
+        style={{ padding: '15px 20px', fontSize: '1.2em', backgroundColor: 'lightblue', color: 'black', border: "ButtonShadow", cursor: 'pointer' }}
         onClick={handleLogin}
       >
         <strong>Login with Spotify</strong>

@@ -17,6 +17,8 @@ const AboutComponent = () => {
         <br></br>
         <br></br>
         <h1 style={{ textAlign: "center", color: "lightblue", fontFamily: "monospace", fontSize: "22px" }}><strong>Visual Features</strong></h1>
+        <li style={{ textAlign: "center", fontSize: "20px", fontFamily: "monospace" }}>Tracks represented by circle geometry in 3JS</li>
+        
       </div>
     </>
   );

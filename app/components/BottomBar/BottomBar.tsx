@@ -13,8 +13,8 @@ const BottomBar = ({ onPlayBtn ,hoveredAlbum } : props ) => {
         <div id={ s.PlayBackControls }>
             
             <div>
-                <span>{hoveredAlbum}</span><br/>
-                <span></span>
+                <span>Track : {hoveredAlbum}</span><br/>
+                <span>Artist : </span>
             </div>
 
             <div id={ s.PlayBtnHolster }><button onClick={( ) => onPlayBtn( )}/></div>
